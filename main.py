@@ -5,13 +5,26 @@ from email.mime.text import MIMEText
 
 password = 'Jolene12345!'  # IMPORTANT: delete it later!
 
+def readContent(path):
+  with open(path, encoding='utf8') as f:
+    subject = f.readline()
+    temp = ''.join(line.rstrip() for line in f)
+    return temp
+
+def readSubject(path):
+   with open(path, encoding='utf8') as f:
+    firstLine = f.readline()
+    subject = firstLine.replace("Subject: ", "")
+    return subject
+
 port = 465
 smtp_server = "smtp.gmail.com"
 sender_email = "highflyersemailsender@gmail.com"
 
 message = MIMEMultipart("alternative")
-message["Subject"] = "Very important test"
+message["Subject"] = readSubject("./content.txt")
 message["From"] = sender_email
+
 
 
 # text = """\
@@ -63,11 +76,7 @@ message["From"] = sender_email
 #     subject=f.readline()       # strip title line
 #     html=''.join(line.rstrip() for line in f)
 
-def readContent(path):
-  with open(path, encoding='utf8') as f:
-    subjec = f.readline()
-    temp = ''.join(line.rstrip() for line in f)
-    return temp
+
 
 text = readContent('./content.txt')
 html = readContent('./content_html.txt')
